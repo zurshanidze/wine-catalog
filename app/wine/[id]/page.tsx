@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { prisma } from "@/lib/db";
 
 export default async function WinePage({ params }: { params: Promise<{ id: string }> }) {
@@ -11,6 +12,7 @@ export default async function WinePage({ params }: { params: Promise<{ id: strin
 
   return (
     <main className="max-w-2xl mx-auto p-8">
+      <Link href="/" className="text-blue-500 hover:underline mb-6 block">← Back to catalog</Link>
       <h1 className="text-3xl font-bold mb-2">{wine.name}</h1>
       <p className="text-gray-500 mb-4">{wine.type} · {wine.country} · {wine.region}</p>
       <p className="mb-4">{wine.description}</p>
