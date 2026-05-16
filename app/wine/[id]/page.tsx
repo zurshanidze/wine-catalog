@@ -20,11 +20,16 @@ export default async function WinePage({ params }: { params: Promise<{ id: strin
       <p className="text-xl font-bold">${wine.price}</p>
       {wine.rating && <p className="mt-2">Rating: {wine.rating}/5</p>}
 
-      <form action={deleteWine.bind(null, wine.id)} className="mt-8">
-        <button type="submit" className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-          Delete Wine
-        </button>
-      </form>
+       <div className="mt-8 flex gap-4">
+       <Link href={`/wine/${wine.id}/edit`} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            Edit Wine
+       </Link>
+       <form action={deleteWine.bind(null, wine.id)}>
+         <button type="submit" className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+            Delete Wine
+         </button>
+        </form>
+       </div>
     </main>
   );
 }
