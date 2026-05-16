@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
+import { deleteWine } from "@/app/actions/wine";
 
 export default async function WinePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -18,6 +19,12 @@ export default async function WinePage({ params }: { params: Promise<{ id: strin
       <p className="mb-4">{wine.description}</p>
       <p className="text-xl font-bold">${wine.price}</p>
       {wine.rating && <p className="mt-2">Rating: {wine.rating}/5</p>}
+
+      <form action={deleteWine.bind(null, wine.id)} className="mt-8">
+        <button type="submit" className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+          Delete Wine
+        </button>
+      </form>
     </main>
   );
 }
