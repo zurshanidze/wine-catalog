@@ -2,7 +2,19 @@
 import Link from "next/link";
 import React, { useState } from "react";
 
-const WineList = ({ wines }) => {
+type Wine = {
+  id: number;
+  name: string;
+  country: string;
+  region: string | null;
+  type: string;
+  description: string | null;
+  price: number;
+  rating: number | null;
+  createdAt: Date;
+};
+
+const WineList = ({ wines }: { wines: Wine[] }) => {
   const [search, setSearch] = useState("");
 
   const filteredWines = wines.filter((wine) =>
