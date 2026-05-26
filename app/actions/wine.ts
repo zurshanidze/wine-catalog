@@ -13,16 +13,6 @@ async function checkAdmin() {
   return payload?.role === "ADMIN";
 }
 
-export async function deleteWine(id: number) {
-  const isAdmin = await checkAdmin();
-  if (!isAdmin) redirect("/");
-
-  await prisma.wine.delete({
-    where: { id },
-  });
-  redirect("/");
-}
-
 export async function addWine(formData: FormData) {
   const isAdmin = await checkAdmin();
   if (!isAdmin) redirect("/");
@@ -37,6 +27,35 @@ export async function addWine(formData: FormData) {
       price: Number(formData.get("price")),
       rating: Number(formData.get("rating")),
     },
+  });
+  redirect("/");
+}
+
+export async function updateWine(id: number, formData: FormData) {
+  const isAdmin = await checkAdmin();
+  if (!isAdmin) redirect("/");
+
+  await prisma.wine.update({
+    where: { id },
+    data: {
+      name: formData.get("name") as string,
+      country: "Georgia",
+      region: formData.get("region") as string,
+      type: formData.get("type") as string,
+      description: formData.get("description") as string,
+      price: Number(formData.get("price")),
+      rating: Number(formData.get("rating")),
+    },
+  });
+  redirect(`/wine/${id}`);
+}
+
+export async function deleteWine(id: number) {
+  const isAdmin = await checkAdmin();
+  if (!isAdmin) redirect("/");
+
+  await prisma.wine.delete({
+    where: { id },
   });
   redirect("/");
 }

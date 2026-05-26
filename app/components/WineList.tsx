@@ -22,11 +22,19 @@ const WineList = ({ wines }: { wines: Wine[] }) => {
   );
 
   return (
-    <div>
+    <div className="w-full">
       <input
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search Georgian Wines"
+        style={{
+          width: "100%",
+          marginBottom: "40px",
+          padding: "8px",
+          border: "2px solid #bfdbfe",
+          borderRadius: "12px",
+        }}
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredWines.map((wine) => {

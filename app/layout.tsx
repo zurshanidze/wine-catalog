@@ -25,9 +25,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={geist.className}>
-        <nav className="border-b px-8 py-4 flex items-center justify-between">
+        <nav className="bg-gray-200 px-8 py-4 flex items-center justify-between">
           <Link href="/" className="text-xl font-bold">
-            🍷 Wine Catalog
+            Georgian Wine Catalog
           </Link>
           <div className="flex items-center gap-4">
             {session?.role === "ADMIN" && (
