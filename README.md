@@ -1,6 +1,6 @@
 # Wine Catalog
 
-A full-stack wine catalog app built with Next.js, TypeScript, Prisma, and PostgreSQL.
+A full-stack Georgian wine catalog built with Next.js, TypeScript, Prisma, and PostgreSQL.
 
 ## Live Demo
 
@@ -16,6 +16,9 @@ A full-stack wine catalog app built with Next.js, TypeScript, Prisma, and Postgr
 
 ## Features
 
-- Browse wines
+- Browse Georgian wines
 - Search by name
-- Add / Edit / Delete wines
+- Authentication (register, login, logout)
+- Role-based access control (admin/user)
+- Admin: Add, Edit, Delete wines
+- Guest: Browse and search only
