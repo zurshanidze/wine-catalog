@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import React, { useState } from "react";
 
 type Wine = {
@@ -11,6 +12,7 @@ type Wine = {
   description: string | null;
   price: number;
   rating: number | null;
+  imageUrl: string | null;
   createdAt: Date;
 };
 
@@ -37,10 +39,25 @@ const WineList = ({ wines }: { wines: Wine[] }) => {
         }}
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredWines.map((wine) => {
+        {filteredWines.map((wine, index) => {
           return (
             <Link href={`/wine/${wine.id}`} key={wine.id}>
               <div className="border rounded-xl p-6 hover:shadow-lg transition cursor-pointer h-full">
+                {wine.imageUrl && (
+                  <div
+                    className="relative w-full mb-4"
+                    style={{ aspectRatio: "2/3" }}
+                  >
+                    <Image
+                      src={wine.imageUrl}
+                      alt={wine.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="rounded-lg object-cover"
+                      priority={index < 2}
+                    />
+                  </div>
+                )}
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-sm font-medium px-3 py-1 bg-gray-100 rounded-full">
                     {wine.type}

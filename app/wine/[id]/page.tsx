@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { prisma } from "@/lib/db";
 import { deleteWine } from "@/app/actions/wine";
 import { cookies } from "next/headers";
@@ -31,10 +32,26 @@ export default async function WinePage({
         ← Back to catalog
       </Link>
       <div className="border rounded-xl p-8">
+        {wine.imageUrl && (
+          <div
+            className="relative w-full max-w-sm mx-auto mb-6"
+            style={{ aspectRatio: "2/3" }}
+          >
+            <Image
+              src={wine.imageUrl}
+              alt={wine.name}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="rounded-lg object-cover"
+              priority
+            />
+          </div>
+        )}
         <div className="flex items-center justify-between mb-6">
           <span className="text-sm font-medium px-3 py-1 bg-gray-100 rounded-full">
             {wine.type}
           </span>
+          c
           {wine.rating && (
             <span className="text-yellow-600 font-medium">
               ★ {wine.rating} / 5

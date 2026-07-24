@@ -21,6 +21,7 @@ model Wine {
   description String?
   price       Float
   rating      Float?
+  imageUrl    String?
   createdAt   DateTime @default(now())
 }
 
