@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { verifySession } from "@/lib/session";
+import cloudinary from "@/lib/cloudinary";
 
 async function checkAdmin() {
   const cookieStore = await cookies();
@@ -26,6 +27,7 @@ export async function addWine(formData: FormData) {
       description: formData.get("description") as string,
       price: Number(formData.get("price")),
       rating: Number(formData.get("rating")),
+      imageUrl: (formData.get("imageUrl") as string) || null,
     },
   });
   redirect("/");
@@ -45,6 +47,7 @@ export async function updateWine(id: number, formData: FormData) {
       description: formData.get("description") as string,
       price: Number(formData.get("price")),
       rating: Number(formData.get("rating")),
+      imageUrl: (formData.get("imageUrl") as string) || null,
     },
   });
   redirect(`/wine/${id}`);
@@ -54,8 +57,26 @@ export async function deleteWine(id: number) {
   const isAdmin = await checkAdmin();
   if (!isAdmin) redirect("/");
 
+  // ჯერ ღვინოს ვპოულობთ imageUrl-ის მისაღებად
+  const wine = await prisma.wine.findUnique({
+    where: { id },
+    select: { imageUrl: true },
+  });
+
+  // მონაცემთა ბაზიდან წაშლა
   await prisma.wine.delete({
     where: { id },
   });
+
+  // Cloudinary-დან სურათის წაშლა
+  if (wine?.imageUrl) {
+    const publicId = wine.imageUrl
+      .split("/")
+      .slice(-2)
+      .join("/")
+      .split(".")[0];
+    await cloudinary.uploader.destroy(publicId);
+  }
+
   redirect("/");
 }
